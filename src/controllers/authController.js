@@ -61,7 +61,7 @@ export async function forgotPassword(req, res, next) {
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
-    const resetPasswordPageURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetPasswordPageURL = `https://bookstore-b2yq.onrender.com/reset-password/${resetToken}`;
 
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetPasswordPageURL}.\nIf you didn't forget your password, just ignore this email.`;
 
