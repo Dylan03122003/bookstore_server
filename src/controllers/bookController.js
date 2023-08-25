@@ -38,8 +38,14 @@ export async function createBook(req, res, next) {
 
 export async function getAllBooks(req, res, next) {
   try {
-    const books = await Book.find();
-    res.status(200).json({ status: 'success', result: books.length, books });
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = limit * (page - 1);
+
+    const totalBooks = await Book.countDocuments();
+
+    const books = await Book.find().skip(skip).limit(limit);
+    res.status(200).json({ status: 'success', totalBooks, result: books.length, books });
   } catch (error) {
     return next(error);
   }
